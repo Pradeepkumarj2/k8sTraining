@@ -1,0 +1,35 @@
+Pod started
+
+NAME                      READY   STATUS    RESTARTS   AGE   IP                NODE                                               NOMINATED NODE   READINESS GATES
+db-b54cd94f4-nskhg        1/1     Running   0          19m   192.168.205.103   ip-172-31-14-212.ap-southeast-1.compute.internal   <none>           <none>
+redis-868d64d78-8lbpp     1/1     Running   0          19m   192.168.205.104   ip-172-31-14-212.ap-southeast-1.compute.internal   <none>           <none>
+result-5d57b59f4b-rtncr   1/1     Running   0          19m   192.168.50.140    ip-172-31-1-65.ap-southeast-1.compute.internal     <none>           <none>
+vote-94849dc97-gnfs6      1/1     Running   0          21m   192.168.50.141    ip-172-31-1-65.ap-southeast-1.compute.internal     <none>           <none>
+worker-dd46d7584-n4v5c    1/1     Running   2          18m   192.168.50.143    ip-172-31-1-65.ap-southeast-1.compute.internal     <none>           <none>
+
+service 
+
+NAME     TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE   SELECTOR
+db       ClusterIP   10.107.6.219     <none>        5432/TCP         19m   app=db
+redis    ClusterIP   10.104.102.9     <none>        6379/TCP         19m   app=redis
+result   NodePort    10.106.216.24    <none>        5001:31005/TCP   18m   app=result
+vote     NodePort    10.111.188.228   <none>        5000:31004/TCP   17m   app=vote
+
+
+After deleting the vote pod
+New pod got recreated due to replic set is 1 
+kubectl delete pod vote-94849dc97-gnfs6
+vote-94849dc97-blr97      1/1     Running   0          92s   192.168.50.144    ip-172-31-1-65.ap-southeast-1.compute.internal     <none>           <none>
+
+After deleting the worker pod
+New pod got recreated due to replic set is 1 
+kubectl delete pod worker-dd46d7584-n4v5c
+worker-dd46d7584-tc2n2    1/1     Running   0          46s     192.168.205.106   ip-172-31-14-212.ap-southeast-1.compute.internal   <none>           <none>
+
+After deleting the db pod
+New pod got recreated due to replic set is 1 
+In result pod values are not reflecting
+kubectl delete pod db-b54cd94f4-nskhg
+db-b54cd94f4-sssf2        1/1     Running   0          70s     192.168.205.107   ip-172-31-14-212.ap-southeast-1.compute.internal   <none>           <none>
+
+
